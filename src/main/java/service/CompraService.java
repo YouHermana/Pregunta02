@@ -21,13 +21,16 @@ public String registrarCompra(String proveedorId,
                               double total,
                               LocalDate fechaEntrega) {
 
-    if (total > 1000 && !aprobacionService.tieneAprobacion()) {
-        return "Compra requiere aprobación";
+    if (!proveedorService.estaActivo(proveedorId)) {
+        return "Proveedor inactivo";
     }
 
-    if (fechaEntrega == null) {
-        return "Fecha de entrega obligatoria";
+    for (Double precio : precios) {
+        if (!catalogoService.precioValido(precio)) {
+            return "Precio inválido";
+        }
     }
+
 
     double impuesto = total * 0.18;
 
