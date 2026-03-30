@@ -21,16 +21,6 @@ public String registrarCompra(String proveedorId,
                               double total,
                               LocalDate fechaEntrega) {
 
-    if (!proveedorService.estaActivo(proveedorId)) {
-        return "Proveedor inactivo";
-    }
-
-    for (Double precio : precios) {
-        if (!catalogoService.precioValido(precio)) {
-            return "Precio inválido";
-        }
-    }
-
     if (total > 1000 && !aprobacionService.tieneAprobacion()) {
         return "Compra requiere aprobación";
     }
